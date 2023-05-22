@@ -1,0 +1,1321 @@
+----------------------------------------------------------------------------------------
+
+Демонстрирайте как бихте използвали статичен член от даден клас в C#.
+
+Имате статичен клас (например Mathematics), който има статичен метод за умножение на две числа. 
+
+Как бихте извикали този статичен метод в класа Program.cs, за да проверите какъв е резултата от умножението на числата 6 и 3 и да отпечатате стойността на конзолата?? 
+
+using System;
+
+public static class Mathematics
+{
+    public static int Multiply(int a, int b)
+    {
+        return a * b;
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        int result = Mathematics.Multiply(6, 3);
+        Console.WriteLine("Резултатът от умножението на числата 6 и 3 е: " + result);
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Дефинирайте за кого ще е видимо поле/метод в C#, ако то е с модификатор за достъп private?
+
+Ако полето или методът в C# е деклариран с модификатор за достъп private, те ще бъдат видими само в рамките на същия клас, в който са дефинирани. 
+Това означава, че те не могат да бъдат достъпвани или извиквани от други класове извън текущия клас. Това осигурява капсулация и управление на достъпа до вътрешни данни и функционалности на класа.
+
+----------------------------------------------------------------------------------------
+
+Имате създаден клас училище, за да можете да създавате обаче училища с тяхното име и адрес ви е необходим конструктор.
+
+Дайте пример за дефиниране на конструктор в C#, който да създава различни училища с подадени име и адрес като параметри.
+
+public class School
+{
+    public string Name { get; private set; }
+    public string Address { get; private set; }
+
+    public School(string name, string address)
+    {
+        Name = name;
+        Address = address;
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Петя е начинаещ програмист и е написала прост клас на C#, но е забравила да спази един много важен принцип в обектно-ориентираното програмиране - 
+а именно спазването на правилната енкапсулация на данните! За да докажете, че различавате модификаторите за достъп до елементите в даден клас, попълнете правилните модификатори в дадения код!
+
+
+public
+ class Turtle
+    {
+        
+private
+ string name;
+        
+private
+   int age;
+        
+public
+  Turtle(string name, int age)
+        {
+            Name = name;
+            Age = age;
+        }
+        
+public
+  string Name
+        {
+            get { return name; }
+            
+package
+  set { name = value; }
+        }
+        
+public
+  int Age
+        {
+            get { return age; }
+            
+package
+  set { age = value; }
+        }
+
+        
+public
+  void MakeTrick()
+        {
+            Console.WriteLine("I do a triple somersault!");
+        }
+    }
+
+----------------------------------------------------------------------------------------
+
+Дайте пример за клас в C#. Нека този клас моделира реалния обект училище и притежава полетата и свойствата: име, адрес, информация.
+
+class School
+{
+    private string name;
+    private string address;
+    private string information;
+
+    public School(string name, string address, string information)
+    {
+        Name = name;
+        Address = address;
+        Information = information;
+    }
+
+    public string Name
+    {
+        get { return name; }
+        set { name = value; }
+    }
+
+    public string Address
+    {
+        get { return address; }
+        set { address = value; }
+    }
+
+    public string Information
+    {
+        get { return information; }
+        set { information = value; }
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Посочете кое от изброените се отнася за конструкторите в C#:
+
+Изберете едно или повече:
+a. Конструкторът се извиква с ключовата дума new.
+b. Конструкторът е специално поле в класа, чрез който инициализираме обекти.<<<<<<<<<<<<<<<<<<<<<<<
+c. Конструкторът е специален метод на класа, чрез който инициализираме обекти.<<<<<<<<<<<<<<<<<<<<<<<<<<
+d. Конструкторът се извиква с ключовата дума ctor.
+e. Конструкторът трябва винаги да има параметри.
+f. Конструкторът няма тип на връщаната стойност.
+g. Конструктор може да бъде с или без параметри.<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+----------------------------------------------------------------------------------------
+
+Имате създаден клас книга, за да можете да създавате обаче книги с тяхното име и автор ви е необходим конструктор.
+
+Дайте пример за дефиниране на конструктор в C#, който да създава различни книги с подадени име и автор като параметри.
+
+class Book
+{
+    private string title;
+    private string author;
+
+    // Конструктор, приемащ име и автор като параметри
+    public Book(string title, string author)
+    {
+        this.title = title;
+        this.author = author;
+    }
+
+    // Метод за извличане на името на книгата
+    public string GetTitle()
+    {
+        return title;
+    }
+
+    // Метод за извличане на името на автора
+    public string GetAuthor()
+    {
+        return author;
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Дефинирайте за кого ще е видимо поле/метод в C#, ако то е с модификатор за достъп public?
+
+Ако полето или методът са декларирани с модификатора за достъп "public" в C#, те ще бъдат видими и достъпни от всяка друга част на програмата, включително и от други класове и обекти. Това означава,
+че полетата и методите с публичен достъп могат да бъдат извиквани, променяни и достъпвани от други части на програмата без ограничения.
+
+----------------------------------------------------------------------------------------
+
+Дайте примерен код на C# за метод за четене и промяна на стойността на едно свойство. (Например свойството Salary). Спазвайте правилната енкапсулация на данните!
+
+class Employee
+{
+    private decimal salary; // Приватно поле за съхранение на стойността на заплатата
+
+    public decimal Salary // Публично свойство за достъп до заплатата
+    {
+        get { return salary; } // Метод за четене на стойността на заплатата
+
+        set { salary = value; } // Метод за промяна на стойността на заплатата
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Employee employee = new Employee();
+
+        // Четене на стойността на заплатата
+        decimal currentSalary = employee.Salary;
+        Console.WriteLine("Текуща заплата: " + currentSalary);
+
+        // Промяна на стойността на заплатата
+        decimal newSalary = 5000;
+        employee.Salary = newSalary;
+        Console.WriteLine("Нова заплата: " + employee.Salary);
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Посочете кое от изброеното е вярно за статичните членове на клас в C#.
+
+Изберете едно или повече:
+a. Членове на класа маркирани като статични, принадлежат на конкретна инстанция, а не на самия клас.
+b. Статичен елемент на класа декларираме като му зададем модификатор static.<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+c. Членове на класа маркирани като статични, принадлежат на самия клас, а не на конкретен обект.<<<<<<<<<<<<<<<<<<<<<<
+d. Статичен елемент на класа декларираме като му зададем модификатор const.
+
+----------------------------------------------------------------------------------------
+
+Обяснете какво правят т.нар setters в C#:
+
+В C#, setter-ите (също наричани "мутатори" или "setter методи") се използват за задаване на стойност на свойство (property) в клас. 
+Те позволяват промяна на стойността на свойството, като осигуряват контрол върху това какви стойности могат да бъдат задавани.
+
+----------------------------------------------------------------------------------------
+Дефинирайте понятието обект в C# като поставите правилно липсващите думи в изреченията.
+
+Всеки обект е [инстанция] на точно един [клас] и е създаден по [шаблон] на този [клас].
+
+Създаването на обект от вече дефиниран [клас] наричаме [инстанциране].
+
+Всеки обект е [наследник] на конкретен клас.
+
+----------------------------------------------------------------------------------------
+
+Дайте пример за статичен клас, който поддържа статичен метод за събиране на две числа.
+
+public static class Calculator
+{
+    public static int Add(int a, int b)
+    {
+        return a + b;
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Даден е следния програмен фрагмент. Открийте грешките и запишете правилния код.
+   
+
+public class Dog
+{
+    private string name;
+    private int age;
+
+    public Dog(string name, int age)
+    {
+        Name = name;
+        Age = age;
+    }
+
+    public string Name
+    {
+        get { return name; }
+        private set { name = value; }
+    }
+
+    public int Age
+    {
+        get { return age; }
+        private set { age = value; }
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Дефиниране на клас BankAccount (банкова сметка)
+
+public class BankAccount
+{
+    private int id;
+    private decimal balance;
+
+    public BankAccount(int id, decimal balance)
+    {
+        Id = id;
+        Balance = balance;
+    }
+
+    public int Id
+    {
+        get { return id; }
+        private set { id = value; }
+    }
+
+    public decimal Balance
+    {
+        get { return balance; }
+        private set { balance = value; }
+    }
+
+    public void Deposit(decimal amount)
+    {
+        if (amount <= 0)
+        {
+            Console.WriteLine("Amount must be a positive number!");
+        }
+        else
+        {
+            Balance += amount;
+        }
+    }
+
+    public void Withdraw(decimal amount)
+    {
+        if (amount > Balance)
+        {
+            Console.WriteLine("Insufficient Balance!");
+        }
+        else
+        {
+            Balance -= amount;
+        }
+    }
+
+    public override string ToString()
+    {
+        return $"Account {Id}, balance {Balance}";
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Дайте примерен код за метод написан на C#, който да върне най-голямото реално число от даден масив.
+
+public static double FindMaxNumber(double[] numbers)
+{
+    if (numbers == null || numbers.Length == 0)
+    {
+        throw new ArgumentException("The array cannot be null or empty.");
+    }
+
+    double maxNumber = numbers[0];
+    for (int i = 1; i < numbers.Length; i++)
+    {
+        if (numbers[i] > maxNumber)
+        {
+            maxNumber = numbers[i];
+        }
+    }
+
+    return maxNumber;
+}
+
+----------------------------------------------------------------------------------------
+
+Дефинирайте понятието функция/метод в програмирането.
+
+В програмирането, функцията (или методът, в зависимост от езика) е блок от код, който извършва определена задача или изчисление. 
+Тя се използва за групиране на редица от инструкции в единичен модул, който може да се извика от други части на програмата.
+
+----------------------------------------------------------------------------------------
+
+Демонстрирайте как бихте използвали статичен член от даден клас в C#.
+
+Имате статичен клас (например Mathematics), който има статичен метод за събиране на две числа. 
+
+Как бихте извикали този статичен метод в класа Program.cs, за да проверите колко е сбора на числата 5 и 6 и да отпечатате стойността на конзолата?? 
+
+using System;
+
+public static class Mathematics
+{
+    public static int Add(int a, int b)
+    {
+        return a + b;
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        int num1 = 5;
+        int num2 = 6;
+        int sum = Mathematics.Add(num1, num2);
+        
+        Console.WriteLine("Сборът на числата {0} и {1} е: {2}", num1, num2, sum);
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Клас School
+
+Program.cs:
+
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        string schoolName = Console.ReadLine();
+        School school = new School(schoolName);
+
+        string[] command = Console.ReadLine().Split();
+        Student student = null;
+
+        while (command[0] != "End")
+        {
+            switch (command[0])
+            {
+                case "Enroll":
+                    student = new Student(command[1], command[2]);
+                    school.EnrollStudent(student);
+                    Console.WriteLine($"{student} was successfully enrolled!");
+                    break;
+                case "Unenroll":
+                    int studentId = int.Parse(command[1]);
+                    Student unenrolledStudent = school.UnenrollStudent(studentId);
+                    if (unenrolledStudent != null)
+                    {
+                        Console.WriteLine($"{unenrolledStudent} was successfully unenrolled!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No such Id in our database!");
+                    }
+                    break;
+                case "Print":
+                    Console.WriteLine(school);
+                    break;
+            }
+
+            command = Console.ReadLine().Split();
+        }
+    }
+}
+
+
+
+Student.cs:
+
+public class Student
+{
+    private static int counter = 1;
+    private int studentId;
+    private string fullName;
+
+    public Student(string firstName, string lastName)
+    {
+        this.studentId = counter++;
+        this.fullName = $"{firstName} {lastName}";
+    }
+
+    public override string ToString()
+    {
+        return $"Student ID: {studentId} Name: {fullName}";
+    }
+}
+
+
+
+School.cs:
+
+using System.Collections.Generic;
+using System.Text;
+
+public class School
+{
+    private List<Student> students;
+    private string name;
+
+    public School(string name)
+    {
+        this.name = name;
+        this.students = new List<Student>();
+    }
+
+    public string Name
+    {
+        get { return name; }
+    }
+
+    public void EnrollStudent(Student student)
+    {
+        students.Add(student);
+    }
+
+    public Student UnenrollStudent(int id)
+    {
+        Student student = students.Find(s => s.StudentId == id);
+        if (student != null)
+        {
+            students.Remove(student);
+            return student;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public override string ToString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine(Name + ":");
+
+        foreach (var student in students)
+        {
+            sb.AppendLine(student.ToString());
+        }
+
+        return sb.ToString().TrimEnd();
+    }
+}
+
+
+----------------------------------------------------------------------------------------
+
+Даден е следния програмен фрагмент. Открийте грешките и запишете правилния код.
+
+public class Cat
+{
+    private string name;
+    private int age;
+
+    public Cat(string name, int age)
+    {
+        this.name = name;
+        this.age = age;
+    }
+
+    public string Name
+    {
+        get { return name; }
+        private set { name = value; }
+    }
+
+    public int Age
+    {
+        get { return age; }
+        private set { age = value; }
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Дайте пример за програма, която да поддържа информация колко обекта от клас Person има създадени до момента. Реализирайте я използвайки статично поле и свойство
+
+public class Person
+{
+    private static int count; // Статично поле за броя на създадените обекти
+
+    public Person()
+    {
+        count++; // Увеличаваме броя на създадените обекти при създаване на нов обект
+    }
+
+    public static int Count
+    {
+        get { return count; } // Статично свойство, което връща броя на създадените обекти
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Person person1 = new Person();
+        Person person2 = new Person();
+        Person person3 = new Person();
+
+        Console.WriteLine($"Брой на създадените обекти: {Person.Count}");
+    }
+}
+
+
+----------------------------------------------------------------------------------------
+
+Напишете правилната дефиниция на ключовата дума this в C#, като попълните липсващите думи в текста:
+
+
+Ключовата дума this в C# дава достъп до текущия обект към който се отнася, когато се използва от метод в даден клас. Това е референция към текущия обект, 
+чийто метод бива извикван. Можем да я разглеждаме като указател, с която да достъпваме членовете на собствения ни обект.
+
+----------------------------------------------------------------------------------------
+Опишете какво представляват класовете в C# като поставите правилно липсващите думи в текста.
+Класът в C# се дефинира чрез ключовата дума class, последвана от името на класа и съвкупност от фигурни скоби {}, обособени в тях тялото на класа.
+
+----------------------------------------------------------------------------------------
+
+Дефинирайте понятието статичен клас в C#. Как се декларира статичен клас? Какво се случва, когато направим един клас да е статичен? С какво най-често е свързана неговата употреба?
+
+Статичният клас в C# е клас, който се използва за групиране на свързани по функционалност методи и свойства, но не може да бъде инстанциран. Той се декларира чрез ключовата дума "static" преди ключовата дума "class".
+
+----------------------------------------------------------------------------------------
+
+Дайте пример за клас в C#. Нека този клас моделира реалния обект книга и притежава полетата и свойствата: име, автор, брой страници.
+
+public class Book
+{
+    // Полета
+    private string name;
+    private string author;
+    private int pageCount;
+
+    // Конструктор
+    public Book(string name, string author, int pageCount)
+    {
+        this.name = name;
+        this.author = author;
+        this.pageCount = pageCount;
+    }
+
+    // Свойства
+    public string Name
+    {
+        get { return name; }
+        set { name = value; }
+    }
+
+    public string Author
+    {
+        get { return author; }
+        set { author = value; }
+    }
+
+    public int PageCount
+    {
+        get { return pageCount; }
+        set { pageCount = value; }
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Имате следния пример: клас Circle е производен на клас Figure. По кой от следните начини е възможно да се декларират обекти?
+
+
+
+Изберете едно или повече:
+a.
+Circle fig = new Figure();
+b.
+Circle fig = new Circle();>>>>>>>>>>>>>>>>>>>>>>>>>>
+c.
+Figure fig = new Figure();<<<<<<<<<<<<<<<<<<<<<<<<<<
+d.
+Figure fig = new Circle();<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+----------------------------------------------------------------------------------------
+
+Дайте примерен код за метод написан на C#, който да върне сумата на всички цели числа от подаден масив.
+
+public class ArraySumCalculator
+{
+    public int CalculateSum(int[] numbers)
+    {
+        int sum = 0;
+        
+        foreach (int number in numbers)
+        {
+            sum += number;
+        }
+        
+        return sum;
+    }
+}
+
+
+----------------------------------------------------------------------------------------
+
+Дайте примерен код на C# за метод само за четене на стойността на едно свойство. (Например свойството Age). Спазвайте правилната енкапсулация на данните!
+
+public class Person
+{
+    private int age;
+
+    public int Age
+    {
+        get { return age; }
+    }
+}
+
+public class Program
+{
+    static void Main(string[] args)
+    {
+        Person person = new Person();
+        // Връща стойността на свойството Age
+        int personAge = person.Age;
+        
+        Console.WriteLine($"Person's age: {personAge}");
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Даден е следния програмен фрагмент. Открийте грешките и запишете правилния код.
+   
+    public class Teacher
+{
+    private string name;
+    private int age;
+
+    public Teacher(string name, int age)
+    {
+        this.name = name;
+        this.age = age;
+    }
+
+    public string Name
+    {
+        get { return name; }
+        private set { name = value; }
+    }
+
+    public int Age
+    {
+        get { return age; }
+        private set { age = value; }
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Класовете в C# могат да съдържат следните елементи:
+
+Полета (fields) - член-променливи от определен тип, които съхраняват данни за обектите от класа.
+
+Свойства (properties) - специален вид елементи, които ни
+дават възможност за допълнителна обработка на данните при четене и запис в полетата от класа. Свойствата се използват за контролиран достъп до полетата и предоставят гъвкавост при работа с данните.
+
+Методи (methods) - реализират манипулацията на данните. Методите са функции, 
+които извършват определени действия или изчисления върху обектите от класа. Те представляват операции, които можем да извършваме върху данните или да променяме състоянието на обектите.
+
+----------------------------------------------------------------------------------------
+
+Как ще запишете свойството/пропъртито години в класа Person? Напишете пример:
+
+public class Person
+{
+    private int age;
+
+    public int Age
+    {
+        get { return age; }
+        set { age = value; }
+    }
+}
+----------------------------------------------------------------------------------------
+
+Открийте грешката в кода и я поправете, така че програмата да работи правилно:
+
+public class Book
+{
+    private static int count;
+
+    public Book()
+    {
+        count++;
+    }
+
+    public int Count { get => count; }
+}
+
+public class Program
+{
+    static void Main(string[] args)
+    {
+        Book book = new Book();
+        Console.WriteLine(book.Count);
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+В C# като статични могат да бъдат декларирани: 
+
+Изберете едно
+a. Полета, свойства и методи.
+b. Методи, конструктори и класове.
+c. Полета, методи и класове.
+d. Полета, методи, свойства, конструктори и класове.<<<<<<<<<<<<<<<<<<<<
+
+----------------------------------------------------------------------------------------
+
+Дайте примерен код за метод написан на C#, който да върне най-малкото реално число от даден масив.
+
+public class Program
+{
+    static void Main(string[] args)
+    {
+        double[] numbers = { 3.14, 2.71, 1.618, 0.577, 4.669 };
+        double minNumber = FindMinNumber(numbers);
+        Console.WriteLine("Най-малкото число в масива е: " + minNumber);
+    }
+
+    static double FindMinNumber(double[] numbers)
+    {
+        double min = numbers[0];
+        for (int i = 1; i < numbers.Length; i++)
+        {
+            if (numbers[i] < min)
+            {
+                min = numbers[i];
+            }
+        }
+        return min;
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Обяснете защо трябва да спазваме правилната енкапсулация на данните в класовете.
+
+Спазването на правилната енкапсулация на данните в класовете е важен принцип в обектно-ориентираното програмиране. 
+Той осигурява контролиран достъп до данните и гарантира правилната работа на обектите и модулите в системата.
+
+----------------------------------------------------------------------------------------
+
+Обяснете какво правят т.нар getters в C#:
+
+Getters (познати и като "getter методи" или "get методи") в C# са методи, 
+които се използват за връщане на стойността на член-променливи (полета) в класовете. Те предоставят достъп до данните, които са декларирани като част от обекта.
+
+----------------------------------------------------------------------------------------
+
+Демонстрирайте как бихте използвали статичен член от даден клас в C#.
+
+Имате клас Person който има статично поле, което брои инстанциите на този клас (count) и статично свойство, с което да достъпите стойността на този брояч. 
+
+Как бихте извикали това статично свойство в класа Program.cs, за да проверите колко инстанции са направени от класа Person и да отпечатате стойността на конзолата?? 
+
+
+using System;
+
+public class Person
+{
+    private static int count;
+    
+    public Person()
+    {
+        count++;
+    }
+    
+    public static int Count
+    {
+        get { return count; }
+    }
+}
+
+public class Program
+{
+    static void Main(string[] args)
+    {
+        // Извикване на статичното свойство Count от класа Person
+        int personCount = Person.Count;
+        
+        Console.WriteLine("Брой инстанции на класа Person: " + personCount);
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
