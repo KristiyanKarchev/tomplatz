@@ -483,28 +483,497 @@ d. Чрез ключовата дума static.
 
 --------------------------------------------------------------------------------------------------------------
 
+Създайте следната йерархия от класове и интерфейси.
+
+За ваше удобство ще ви бъде предоставен скелет на задачата, който обаче е непълен/неработещ/некоректен. Предоставеният скелет трябва да се приведе в работещ вид.
+
+Интерфейс IMakeNoise code debug animals
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+interface IMakeNoise
+{
+    string MakeNoise();
+}
+
+interface IMakeTrick
+{
+    string MakeTrick();
+}
+
+interface IAnimal
+{
+    string Type { get; }
+    string Name { get; }
+    void Perform();
+}
+
+abstract class Animal : IAnimal
+{
+    private string name;
+
+    protected Animal(string name)
+    {
+        Name = name;
+    }
+
+    public string Name
+    {
+        get { return name; }
+        private set
+        {
+            if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException("Name can't be null or empty!");
+            }
+            name = value;
+        }
+    }
+
+    public abstract string Type { get; }
+
+    public void Perform()
+    {
+        Console.WriteLine($">>> {MakeNoise()}");
+        Console.WriteLine($">>> {MakeTrick()}");
+    }
+
+    public override string ToString()
+    {
+        return $"{Type} {Name}";
+    }
+}
+
+class Cat : Animal, IMakeNoise, IMakeTrick
+{
+    public Cat(string name) : base(name)
+    {
+    }
+
+    public override string Type => "Cat";
+
+    public string MakeNoise()
+    {
+        return "Meow!";
+    }
+
+    public string MakeTrick()
+    {
+        return "No trick for you! I'm too lazy!";
+    }
+}
+
+class Dog : Animal, IMakeNoise, IMakeTrick
+{
+    public Dog(string name) : base(name)
+    {
+    }
+
+    public override string Type => "Dog";
+
+    public string MakeNoise()
+    {
+        return "Woof!";
+    }
+
+    public string MakeTrick()
+    {
+        return "Hold my paw, human!";
+    }
+}
+
+class Trainer
+{
+    private IAnimal entity;
+    private string name;
+
+    public Trainer(string name, IAnimal entity)
+    {
+        Name = name;
+        Entity = entity;
+    }
+
+    public string Name
+    {
+        private set
+        {
+            if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException("Name can't be null or empty!");
+            }
+            name = value;
+        }
+        get { return name; }
+    }
+
+    public IAnimal Entity
+    {
+        private set
+        {
+            entity = value;
+        }
+        get { return entity; }
+    }
+
+    public void Work(IAnimal entity)
+    {
+        this.Entity = entity;
+        Console.WriteLine($"Trainer {this.Name} works with {Entity}!");
+    }
+
+    public void Make()
+    {
+        this.Entity.Perform();
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        List<IAnimal> animals = new List<IAnimal>();
+
+        int n = int.Parse(Console.ReadLine());
+
+        for (int i = 0; i < n; i++)
+        {
+            string[] line = Console.ReadLine().Split();
+            IAnimal animal = CreateAnimal(line);
+            animals.Add(animal);
+        }
+
+        string trainerName = Console.ReadLine();
+        Trainer trainer = null;
+
+        string name = Console.ReadLine();
+
+        while (name != "End")
+        {
+            IAnimal current = animals.FirstOrDefault(a => a.Name.Equals(name));
+
+            if (current == null)
+            {
+                Console.WriteLine("No such name in the Database!");
+            }
+            else
+            {
+                if (trainer == null)
+                {
+                    trainer = new Trainer(trainerName, current);
+                }
+                trainer.Work(current);
+                trainer.Make();
+            }
+
+            name = Console.ReadLine();
+        }
+    }
+
+    private static IAnimal CreateAnimal(string[] line)
+    {
+        IAnimal animal = null;
+
+        switch (line[0])
+        {
+            case "Cat":
+                animal = new Cat(line[1]);
+                break;
+            case "Dog":
+                animal = new Dog(line[1]);
+                break;
+        }
+
+        return animal;
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------
+
+По време на теоретичния изпит се предоставя непълен/неработещ/некоректен програмен фрагмент. Предоставеният фрагмент да се приведе в работещ вид.
+
+Предоставеният фрагмент е непълен/некоректен.
+
+Вашата задача е да приведе предоставеният програмен код в работещ вид.
 
 
+По време на теоретичния изпит се предоставя непълен/неработещ/некоректен програмен фрагмент. Предоставеният фрагмент да се приведе в работещ вид.
 
+Тоталитрано дистопично общество
 
+Бъдещето е! Вие сте владетел на тоталитрано дистопично общество населено с граждани и бунтовници!
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+interface IBuyer
+{
+    void BuyFood();
+    int Food { get; }
+}
 
+interface IIdentifiable
+{
+    string Id { get; }
+}
 
+interface IPersonable
+{
+    string Name { get; }
+    int Age { get; }
+}
 
+class Community : IIdentifiable, IPersonable, IBuyer
+{
+    private string id;
+    private string name;
+    private int age;
+    private int food;
 
+    public Community(string id, string name, int age)
+    {
+        Id = id;
+        Name = name;
+        Age = age;
+        Food = 0;
+    }
 
+    public string Id
+    {
+        get { return id; }
+        set { id = value; }
+    }
 
+    public string Name
+    {
+        get { return name; }
+    }
 
+    public int Age
+    {
+        get { return age; }
+        set { age = value; }
+    }
 
+    public int Food
+    {
+        get { return food; }
+        protected set { food = value; }
+    }
 
+    public virtual void BuyFood()
+    {
+        Food += 10;
+    }
 
+    public override string ToString()
+    {
+        return $"ID:{Id} {GetType().Name} Name: {Name} Age {Age} Food: {Food}";
+    }
+}
 
+class Citizen : Community
+{
+    private string birthdate;
 
+    public Citizen(string id, string name, int age, string birthdate)
+        : base(id, name, age)
+    {
+        Birthdate = birthdate;
+    }
 
+    public string Birthdate
+    {
+        get { return birthdate; }
+        set { birthdate = value; }
+    }
 
+    public override void BuyFood()
+    {
+        Food += 10;
+    }
 
+    public override string ToString()
+    {
+        return base.ToString() + $" Birthdate {Birthdate}";
+    }
+}
 
+class Rebel : Community
+{
+    private string group;
+
+    public Rebel(string id, string name, int age, string group)
+        : base(id, name, age)
+    {
+        Group = group;
+    }
+
+    public string Group
+    {
+        get { return group; }
+        set { group = value; }
+    }
+
+    public override void BuyFood()
+    {
+        Food += 5;
+    }
+
+    public override string ToString()
+    {
+        return base.ToString() + $" Group {Group}";
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        int n = int.Parse(Console.ReadLine());
+        Dictionary<string, Community> community = new Dictionary<string, Community>();
+
+        for (int i = 0; i < n; i++)
+        {
+            string[] input = Console.ReadLine().Split();
+
+            if (input[0].StartsWith("R"))
+            {
+                string id = input[0];
+                string name = input[1];
+                int age = int.Parse(input[2]);
+                string group = input[3];
+
+                community[id] = new Rebel(id, name, age, group);
+            }
+            else if (input[0].StartsWith("C"))
+            {
+                string id = input[0];
+                string name = input[1];
+                int age = int.Parse(input[2]);
+                string birthdate = input[3];
+
+                community[id] = new Citizen(id, name, age, birthdate);
+            }
+        }
+
+        string id = Console.ReadLine();
+
+        while (id != "End")
+        {
+            if (community.ContainsKey(id))
+            {
+                community[id].BuyFood();
+            }
+            else
+            {
+                Console.WriteLine($"Entity with {id} does not exist!");
+            }
+
+            id = Console.ReadLine();
+        }
+
+        int totalFood = community.Sum(c => c.Value.Food);
+
+        foreach (var person in community.Values)
+        {
+            Console.WriteLine(person);
+        }
+
+        Console.WriteLine($"TotalFood: {totalFood}");
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------
+
+Дайте пример за наследяване в C#. 
+
+Имате клас Animal с метод Eat(), който отпечатва "Eating...". Имате Котка и Куче, които трябва да наследяват от Animal. 
+Те обаче трябва да могат да издават звук. Котката трябва да казва "Meow", а Кучето - "Bark". 
+За тази цел създайте методи със съответните имена, котио извеждат на екрана звуците на всяко животно. Направете така че да не бъде възможно да се създаде обект от клас Animal.
+
+Реализирайте го чрез програмен код на C#.
+
+using System;
+
+class Animal
+{
+    public void Eat()
+    {
+        Console.WriteLine("Eating...");
+    }
+}
+
+class Cat : Animal
+{
+    public void Meow()
+    {
+        Console.WriteLine("Meow");
+    }
+}
+
+class Dog : Animal
+{
+    public void Bark()
+    {
+        Console.WriteLine("Bark");
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------
+
+Дайте пример за шаблонен клас, който да се казва Кутия и тази кутия да може да съхранява всичко. 
+В този клас създайте и един метод, който да премахва първия елемент от кутията и да връща като резултат неговата стойност.
+
+using System;
+using System.Collections.Generic;
+
+class Box<T>
+{
+    private List<T> items;
+
+    public Box()
+    {
+        items = new List<T>();
+    }
+
+    public void Add(T item)
+    {
+        items.Add(item);
+    }
+
+    public T RemoveFirst()
+    {
+        if (items.Count == 0)
+        {
+            throw new InvalidOperationException("The box is empty.");
+        }
+
+        T firstItem = items[0];
+        items.RemoveAt(0);
+        return firstItem;
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------
+
+Имате следния пример: 
+
+клас Circle е производен на абстрактният клас Figure. 
+
+Демонстрирайте начините, по които е възможно да се декларира референция на някой от класовете, която да сочи обект от клас Circle:
+
+Ето няколко начина, по които може да се декларира референция, която да сочи обект от клас Circle, който е производен на абстрактния клас Figure:
+
+Чрез деклариране на променлива от типа на базовия клас и присвояване на обект от производния клас: Figure circle1 = new Circle();
+
+Чрез деклариране на променлива от типа на производния клас: Circle circle2 = new Circle();
+
+ --------------------------------------------------------------------------------------------------------------
+ 
+ 
 
 
 
