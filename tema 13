@@ -1,0 +1,623 @@
+-------------------------------------------------------------------------------
+
+Демонстрирайте създаване на клас, който съответства на следната таблица в БД:
+
+id : int(11)
+FirstName : varchar(50)
+MiddleName : varchar(20)
+LastName : varchar(50)
+BirthDate : datetime
+CityId : int(11)
+
+
+class Person {
+
+[public int Id { get; set; }]
+
+[public string FirstName { get; set; }]
+
+[public string MiddleName { get; set; }]
+
+[public string LastName { get; set; }]
+
+[public DateTime BirthDate { get; set; }]
+
+[public int CityId { get; set; }]
+
+}
+
+-------------------------------------------------------------------------------
+
+Посочете как се нарича типа в EntityFrameworkCore, който съдържа в себе си записите от дадена таблица от база данни.
+
+Изберете едно
+a. Entries
+b. DbContext
+c. List
+d. DbSet <<<<<<<<<<<<<<<<<
+
+-------------------------------------------------------------------------------
+
+Обяснете защо примерния програмен фрагмент няма да доведе до изтриване на данни от базата данни:
+
+public void DeleteList(ToDoList toDoList)
+
+{
+
+    _context.ToDoList.Remove(toDoList);
+
+}
+
+Правилния отговор е: 
+Примерният програмен фрагмент, който изтрива ToDoList от контекста, не довежда до изтриване на данни от базата данни.
+
+При предоставения фрагмент липсва извикването на метода SaveChanges() на контекста след изтриването на обекта. Това означава, че промените не се запазват в базата данни.
+
+За да се осъществи изтриването на данни от базата данни, трябва да се добави извикване на метода SaveChanges() след премахването на ToDoList. Примерно, кодът би трябвало да изглежда по следния начин:
+public void DeleteList(ToDoList toDoList)
+{
+    _context.ToDoList.Remove(toDoList);
+    _context.SaveChanges();
+}
+Това ще запази промените в контекста и ще изтрие ToDoList от базата данни.
+
+-------------------------------------------------------------------------------
+
+Посочете кое от следните е валиден начин за изпращане на SELECT заявка в C#.
+Изберете едно
+a. SqlCommand command = new SqlCommand(dbCon, "SELECT COUNT(*) FROM Employees");
+b. SqlClient command = new SqlClient( "SELECT COUNT(*) FROM Employees");
+c. SqlCommand command = new SqlCommand( "SELECT COUNT(*) FROM Employees", dbCon);<<<<<<<<<<<<<<<<<<<
+d. SqlCommand command = new SqlCommand( "SELECT COUNT(*) FROM Employees");
+
+-------------------------------------------------------------------------------
+
+Какво представлява ViewModel?
+
+Изберете едно
+a. Всички изброени са верни.<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+b. ViewModel-ите могат да съдържат валидация на данни от изгледа
+c. ViewModel-ите съдържат данни, които се използват от изгледите
+d. ViewModel-ите могат да съдържат данни от различни същностни (entity) класове
+
+-------------------------------------------------------------------------------
+
+Разполагате със следния Context клас за връзка с БД в EntityFrameworkCore.
+
+Демонстрирайте Update операция, като напишете код за Update метода на клас, който редактира запис. Използвайте предоставения скелет.
+
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ToDoListMVC.DAL.Entities;
+
+namespace ToDoListMVC.DAL.Data
+{
+    public class ToDoDbContext : DbContext
+    {
+        public DbSet<ToDoList> ToDoLists { get; set; }
+        public DbSet<ToDoItem> ToDoItems { get; set; }
+        public ToDoDbContext(DbContextOptions<ToDoDbContext> options)
+            : base(options)
+        {
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+    }
+}
+
+Скелет за клас:
+
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ToDoListMVC.DAL.Abstractions;
+using ToDoListMVC.DAL.Data;
+
+namespace ToDoListMVC.DAL.Repositories
+{
+    public class ToDoRepository
+    {
+        private readonly ToDoDbContext _context;
+        public ToDoRepository(ToDoDbContext dbContext)
+        {
+            _context = dbContext;
+        }
+        public void Update(ToDoItem entity)
+        {
+            
+            
+        }
+
+    }
+}
+
+ Правилния отговор е: 
+public void Update(ToDoItem entity)
+{
+    _context.Entry(entity).State = EntityState.Modified;
+    _context.SaveChanges();
+}
+
+-------------------------------------------------------------------------------
+
+Посочете грешното твърдение за ORM технологиите.
+
+Изберете едно
+a. всички посочени твърдения са верни
+b. ORM технологиите имат по-добра производителност от чисти SQL заявки <<<<<<<<<<<<<<<<<<<<<
+c. ORM технологиите генерират SQL код, който съответства на използваните команди
+d. ORM технологиите спестяват писане на SQL код
+
+-------------------------------------------------------------------------------
+
+Правилният отговор е:
+Различете кода с ORM и без ORM. Над всеки от фрагментите код запишете дали използва ORM система или не.
+
+[ORM ‑ EntityFrameworkCore]
+
+_context.Add(entity);
+
+await _context.SaveChangesAsync();
+
+[Не използва ORM система]
+
+using(dbCon)
+{
+	SqlCommand command = new SqlCommand("SELECT * FROM Employees", dbCon);
+	SqlDataReader reader = command.ExecuteReader();
+	using (reader)
+	{
+		while (reader.Read())
+		{
+      string firstName = (string)reader["FirstName"];
+      string lastName = (string)reader["LastName"];
+      decimal salary = (decimal)reader["Salary"];
+			Console.WriteLine("{firstName} {lastName} {salary}");
+		}
+	}
+}
+[ORM ‑ EntityFrameworkCore]
+
+var lists = _context.ToDoLists
+	.Where(item => item.Active == true)
+  .OrderByDescending(item => item.Id)
+  .ToList();
+
+-------------------------------------------------------------------------------
+
+Посочете кое от следните НЕ Е ORM система.
+
+Изберете едно
+a. Doctrine
+b. Hibernate
+c. EntityFrameworkCore
+d. Microsoft SQL Server<<<<<<<<<<<<<<<<<<<<
+
+-------------------------------------------------------------------------------
+
+Обяснете действието на следния фрагмент:
+
+toDoList.ModifiedAt = DateTime.Now;
+_context.Update(toDoList);
+await _context.SaveChangesAsync();
+
+Фрагментът от код има за цел да актуализира записа на toDoList в базата данни чрез установяване на новата стойност на свойството ModifiedAt и извикване на методите _context.Update(toDoList) и _context.SaveChangesAsync().
+
+toDoList.ModifiedAt = DateTime.Now; - Този ред задава текущата дата и час на свойството ModifiedAt на обекта toDoList. Това позволява да се запише актуалната информация за момента, когато е направена промяната в обекта.
+
+-------------------------------------------------------------------------------
+
+Обяснете предназначението на контролера в MVC и ASP.NET Core.
+
+Контролерът в архитектурата Model-View-Controller (MVC) и ASP.NET Core е компонент, 
+отговарящ за приемането на входни заявки от потребителите и координирането на изпълнението на операциите, свързани с обработката на тези заявки.
+
+-------------------------------------------------------------------------------
+
+Трябва да създадете метод, който проверява дали дадено потребителско име съществува или не. Посочете кое е най-подходящото име за него, което спазва добрите практики за именуване на методи в .NET.
+Изберете едно
+a. Username Exists
+b. UsernameInUse<<<<<<<<<<<<<<<<<<<<<<
+c. Checkusername
+d. check
+
+-------------------------------------------------------------------------------
+
+Демонстрирайте създаването на таблици по CodeFirst подхода за следния Context клас:
+
+Създайте таблици за следните класове: Author, Book, Category, Order
+Примете, че необходимите using директиви са предварително поставени.
+
+public class ApplicationDbContext : DbContext
+
+{
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+
+            : base(options)
+
+        {
+
+        }
+
+        // your code goes here
+
+}
+
+Правилния отговор:
+
+using Microsoft.EntityFrameworkCore;
+
+public class ApplicationDbContext : DbContext
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
+    }
+
+    public DbSet<Author> Authors { get; set; }
+    public DbSet<Book> Books { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Order> Orders { get; set; }
+}
+
+-------------------------------------------------------------------------------
+
+Посочете какво означава абривиатурата ORM:
+
+Изберете едно
+a.
+One Real Model
+b.
+Object Relational Mapping<<<<<<<<<<<<<<<<<<<<
+c.
+Operational Repair Machine
+d.
+Open Registration Method
+
+-------------------------------------------------------------------------------
+
+За колко действия може да отговаря един метод?
+
+Изберете едно
+a. няма значение от броя на действията, но броя на редовите не бива да е по-голям от 30
+b. едно <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+c. не повече от 10
+d. методите не отговарят за действия, а за стойности
+
+-------------------------------------------------------------------------------
+
+Демонстрирайте създаване на ViewModel за ToDoItem със следните полета:
+
+Id
+
+Title (заглавие, максимум 50 знака, задължително)
+
+Description (описание, максимум 255 знака, не е задължително)
+
+ToDoListId
+
+Правилния отговор:
+
+public class ToDoItemViewModel
+{
+    [Key]
+    public int Id { get; set; }
+
+    [Required]
+    [MaxLength(50)]
+    [Column(TypeName = "nvarchar(50)")]
+    public string Title { get; set; }
+
+    [MaxLength(255)]
+    [Column(TypeName = "nvarchar(255)")]
+    public string Description { get; set; }
+
+    [ForeignKey("ToDoList")]
+    public int ToDoListId { get; set; }
+
+    public virtual ToDoList ToDoList { get; set; }
+}
+
+-------------------------------------------------------------------------------
+
+Обяснете предназначението на модела в MVC и ASP.NET Core.
+
+Моделът (Model) в архитектурата Model-View-Controller (MVC) и ASP.NET Core представлява компонент, 
+който отговаря за представянето, обработката и управлението на данните в приложението.
+
+Предназначението на модела е да предостави структура и логика за работа с данни, които са необходими за функционирането на приложението. Моделите съхраняват и обработват информацията, 
+като могат да представят конкретни обекти или ентитети, връзки между тях, бизнес логика и валидация.
+
+-------------------------------------------------------------------------------
+
+Посочете кое от следните е ORM система.
+
+Изберете едно
+a. MySQL
+b. Visual Studio
+c. Microsoft SQL Server<<<<<<<<<<<<<
+d. EntityFrameworkCore<<<<<<<<<<<<<<<<<
+
+-------------------------------------------------------------------------------
+
+Обяснете предназначението на изгледа в MVC и ASP.NET Core.
+
+Изгледът (View) в архитектурата Model-View-Controller (MVC) и ASP.NET Core представлява компонент, 
+отговарящ за представянето на данните на потребителя и визуализирането им в подходящ формат (например HTML, XML, JSON).
+
+Предназначението на изгледа е да отговаря за визуализацията и представянето на данните, с които потребителят взаимодейства, като генерира подходящ HTML или друг формат за показване на информацията. 
+Изгледът няма директен достъп до данните или бизнес логиката на приложението, тъй като тези отговорности са отделени в моделите и контролерите.
+
+-------------------------------------------------------------------------------
+
+Посочете какво наричаме „магически стойности" в програмирането.
+
+Изберете едно
+a. стойности, които се определят на ниво система и контролират изпълнението на програмата
+b. нито едно от посочените
+c. низове или числени стойности, които са поставени директно в кода<<<<<<<<<<<<<<<<<<<<<<<<<<
+d. стойности, които се определят случайно при използването на програмата
+
+-------------------------------------------------------------------------------
+
+Посочете кой от следните примери е нарушение на добрите практики при използването на WindowsForms като графичен потребителски интерфейс за приложение.
+
+Изберете едно
+a. имената на контролите от форма са оставени по подразбиране на label1, button1 и т.н.<<<<<<<<<<<<<<<<<<<<<<<
+b. разполагане на слоевете в отделни проекти в solution
+c. наличие на слой за данни
+d. наличие на слой за бизнес логика (слой за услуги)
+
+-------------------------------------------------------------------------------
+
+Демонстрирайте създаване на ViewModel за Book със следните полета:
+
+Id
+
+Title (заглавие, максимум 50 знака, задължително)
+Description (описание, максимум 255 знака, не е задължително)
+AuthorName (име на автор, максимум 80 знака, задължително)
+
+public class BookViewModel
+{
+    public int Id { get; set; }
+
+    [Required]
+    [MaxLength(50)]
+    public string Title { get; set; }
+
+    [MaxLength(255)]
+    public string Description { get; set; }
+
+    [Required]
+    [MaxLength(80)]
+    public string AuthorName { get; set; }
+}
+
+-------------------------------------------------------------------------------
+
+Посочете как се нарича типа в EntityFrameworkCore, който съдържа в себе си записите от дадена таблица от база данни.
+
+Изберете едно
+a. List
+b. Entries
+c. DbSet<<<<<<<<<<<<<<<<<
+d. DbContext
+
+-------------------------------------------------------------------------------
+
+Обяснете действието на следния фрагмент:
+
+	toDoList.CreatedAt = DateTime.Now;
+  _context.Add(toDoList);
+  await _context.SaveChangesAsync();
+
+Действието на горния фрагмент е свързано с добавянето на нов обект от тип ToDoList към базата данни, като се установява текущата дата и час на създаване и се извършва запис в базата данни.
+
+-------------------------------------------------------------------------------
+
+Демонстрирайте създаване на клас, който съответства на следната таблица в БД:
+
+Id: int(11)
+Ttitle : varchar(255)
+Author : varchar(255)
+Price : decimal(15,2)
+Quantity : int(11)
+
+class Book {
+
+[public int Id { get; set; }]
+
+[public string Title { get; set; }]
+
+[public string Author { get; set; }]
+
+[public double Price { get; set; }]
+
+[public int Quantity { get; set; }]
+
+}
+
+-------------------------------------------------------------------------------
+
+Посочете кое от следните е валиден начин за прочитане на резултатите от SELECT заявка в C#.
+Изберете едно
+a.
+SqlCommand command = new SqlCommand("SELECT * FROM Employees", dbCon);
+SqlDataReader reader = command.ExecuteReader();
+using (reader)
+{
+	foreach (item in reader)
+	{
+		string firstName = (string)item["FirstName"];
+		string lastName = (string)item["LastName"];
+		decimal salary = (decimal)item["Salary"];
+		Console.WriteLine($"{firstName} {lastName} {salary}");
+	}
+}
+b.
+SqlCommand command = new SqlCommand("SELECT * FROM Employees", dbCon);
+SqlDataReader reader = command.ExecuteReader();
+using (reader)
+{
+	while (reader.Read())
+	{
+		string firstName = (string)reader.get("FirstName");
+		string lastName = (string)reader.get("LastName");
+		decimal salary = (decimal)reader.get("Salary");
+		Console.WriteLine($"{firstName} {lastName} {salary}");
+	}
+}
+c.
+SqlCommand command = new SqlCommand("SELECT * FROM Employees", dbCon);
+SqlDataReader reader = command.ExecuteReader();
+using (reader)
+{
+	while (reader.Read())
+	{
+		string firstName = (string)reader->FirstName;
+		string lastName = (string)reader->LastName;
+		decimal salary = (decimal)reader->Salary;
+		Console.WriteLine($"{firstName} {lastName} {salary}");
+	}
+}
+d.
+SqlCommand command = new SqlCommand("SELECT * FROM Employees", dbCon);
+SqlDataReader reader = command.ExecuteReader();
+using (reader)
+{
+	while (reader.Read())                                             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	{
+		string firstName = (string)reader["FirstName"];                           <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		string lastName = (string)reader["LastName"];                    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		decimal salary = (decimal)reader["Salary"];
+		Console.WriteLine($"{firstName} {lastName} {salary}");
+	}
+}
+
+-------------------------------------------------------------------------------
+
+Посочете за какво служи низа за връзка (connection string) в C# приложенията.
+
+Изберете едно
+a. съдържа библиотеки, които указват как приложението комуникира с БД
+b. съдържа адрес на сървъра на базата данни
+c. съдържа данни за връзка и достъп до БД и стойности за други параметри на връзката<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+d. нито едно от изброените
+
+-------------------------------------------------------------------------------
+
+
+Посочете вярното твърдение за класовете, наследяващи класа DbContext.
+
+Изберете едно
+a. Изброяват типовете данни, които ще управляват под формата на свойства от generic типа DbSet<<<<<<<<<<<<<<<<<<<<<<<<<<<
+b. Използват се за комуникация с браузъри
+c. Нито едно от посочените не е вярно
+d. Не могат да работят с релационни бази от данни
+
+-------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
