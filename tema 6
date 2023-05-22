@@ -790,9 +790,35 @@ private static void Swap(List<int> list, int index, int min)
 
 ---------------------------------------------------------------------------
 
+Изчислете максималния брой стъпки за намиране на сбора от четните елементи в масив. Като предполагаме, че една стъпка е една инструкция на CPU, а именно: подредби, търсения на елемент в масив, сравнения, аритметични операции.
+
+int GetSumEven(int[] array)
+{
+  int sum = 0;
+  for (int i = 0; i < array.Length; i++)
+    if (array[i] % 2 == 0) 
+        sum += array[i];
+  return sum;
+}
 
 
+T(n) = (отговор);
+otgovora e:
+T(n) = 2n + k + 2.
 
+---------------------------------------------------------------------------
+Открийте липсващите части от кода:
+
+public static int Linear<T>(T[] elements, T key) where T : [IComparable]
+ {
+   for (int index = 0; index < [elements.Length]; index++)
+      if ( elements[index].CompareTo(key) == 0
+      {
+         return index;
+         }
+       }
+         return -1;
+      }
 
 
 
