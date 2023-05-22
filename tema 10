@@ -212,26 +212,83 @@ ELSE
 [END IF];
 
 -------------------------------------------------------------------------------------------------------------
+Електрическите тротинетки се превърнаха в голям хит през последните няколко години. В големите градове те са все по-предпочитан и удобен начин за транспорт. 
+Компания за отдаване под наем на електрически тротинетки има нужда от създаване на софтуер за дейността си. Ваша отговорност е да изпълните заявки върху базата данни, която съдържа следните таблици:
+
+Най-голям баланс на софийски потребители
+
+SELECT u.id, u.username, u.balance
+FROM users u
+JOIN cities c ON u.city_id = c.id
+WHERE c.name = 'Varna'
+ORDER BY u.balance DESC
+LIMIT 1;
 
 
 
 
 
+SELECT COUNT(*) AS total_rents, c.name AS city_name
+FROM rents r
+JOIN users u ON u.user_id = r.user_id
+JOIN cities c ON u.city_id = c.id
+GROUP BY c.name
+ORDER BY total_rents DESC, r.id ASC
+LIMIT 10;
 
 
 
 
+SELECT COUNT(*) AS total_rents, u.username
+FROM rents r
+JOIN users u ON u.user_id = r.user_id
+GROUP BY u.user_id
+ORDER BY total_rents DESC, u.username ASC
+LIMIT 5;
 
 
+-------------------------------------------------------------------------------------------------------------
+
+Създайте база данни с името online_auction. Ще получите описания, с помощта на които ще създадете следните 5 таблици: 
+
+cities 
+
+persons 
+
+product_types 
+
+products 
+
+bids 
+
+SELECT p.id, p.name AS product_name, ps.first_name, ps.last_name, c.name AS city_name, c.country_name
+FROM products p
+JOIN persons ps ON p.owner_id = ps.id
+JOIN cities c ON p.sold_city_id = c.id
+WHERE ps.first_name = 'Britni' AND c.country_name = 'Germany'
+ORDER BY p.id ASC;
 
 
+SELECT ps.id, ps.first_name, ps.last_name, c.name AS city_name, COUNT(p.id) AS product_count
+FROM persons ps
+JOIN products p ON p.owner_id = ps.id
+JOIN cities c ON ps.city_id = c.id
+GROUP BY ps.id
+ORDER BY product_count DESC, ps.first_name ASC
+LIMIT 10;
 
 
+SELECT p.name AS product_name, c.name AS city_name, COUNT(b.product_id) AS bid_count, MAX(b.amount) AS max_amount, MIN(b.amount) AS min_amount
+FROM products p
+JOIN bids b ON p.id = b.product_id
+JOIN cities c ON c.id = p.sold_city_id
+WHERE c.country_name = 'Bulgaria'
+GROUP BY p.id
+ORDER BY bid_count DESC
+LIMIT 5;
 
 
-
-
-
+-------------------------------------------------------------------------------------------------------------
 
 
 
