@@ -608,10 +608,40 @@ list.FindAll(x => (x % 2) == 0)
 
 -------------------------------------------------------------------------------------
 
+Напишете програма, която филтрира списък с имена по тяхната дължина. На първия ред ще ви бъде дадено цяло число n, представляващо дължина на име. 
+На втория ред ще ви бъде дадени някои имена като символни низове, разделени с интервал.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+class Program
+{
+    static void Main(string[] args)
+    {
+        int length = int.Parse(Console.ReadLine());
+        List<string> names = Console.ReadLine().Split().ToList();
 
+        List<string> filteredNames = FilterNamesByLength(names, length);
+        PrintNames(filteredNames);
+    }
 
+    static List<string> FilterNamesByLength(List<string> names, int maxLength)
+    {
+        List<string> filteredNames = names.Where(name => name.Length <= maxLength).ToList();
+        return filteredNames;
+    }
+
+    static void PrintNames(List<string> names)
+    {
+        foreach (string name in names)
+        {
+            Console.WriteLine(name);
+        }
+    }
+}
+
+-------------------------------------------------------------------------------------
 
 
 
